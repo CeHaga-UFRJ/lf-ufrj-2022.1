@@ -532,12 +532,19 @@ typedef enum _TOKEN {
 
 char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", /*"SINGLE_CMT", "OPEN_MULTI_CMT", "CLOSE_MULTI_CMT", "IN_MULTI_CMT",*/ "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON" };
 
-int column = 0;
-int line = 0;
+int column = 1;
+int line = 1;
+int newColumn = 1;
+int newLine = 1;
 
-#line 539 "lex.yy.c"
+void update(){
+  column = newColumn;
+  line = newLine;
+}
 
-#line 541 "lex.yy.c"
+#line 546 "lex.yy.c"
+
+#line 548 "lex.yy.c"
 
 #define INITIAL 0
 #define IN_CMT 1
@@ -755,10 +762,10 @@ YY_DECL
 		}
 
 	{
-#line 57 "flex.l"
+#line 64 "flex.l"
 
 
-#line 762 "lex.yy.c"
+#line 769 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -817,177 +824,177 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 59 "flex.l"
-{ column += 2; BEGIN(IN_CMT); }
+#line 66 "flex.l"
+{ update(); newColumn += 2; BEGIN(IN_CMT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 60 "flex.l"
-{ column += 2; BEGIN(INITIAL); }
+#line 67 "flex.l"
+{ update(); newColumn += 2; BEGIN(INITIAL); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 61 "flex.l"
-{ column += 1; }
+#line 68 "flex.l"
+{ update(); newColumn += 1; }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 62 "flex.l"
-{ column = 0; line += 1; }
+#line 69 "flex.l"
+{ update(); newColumn = 1; newLine += 1; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 63 "flex.l"
-{ column += strlen(yytext); }
+#line 70 "flex.l"
+{ update(); newColumn += strlen(yytext); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 65 "flex.l"
-{ column += strlen(yytext); return IntNum; }
+#line 72 "flex.l"
+{ update(); newColumn += strlen(yytext); return IntNum; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 66 "flex.l"
-{ column += strlen(yytext); return FloatNum; }
+#line 73 "flex.l"
+{ update(); newColumn += strlen(yytext); return FloatNum; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 68 "flex.l"
-{ column += 2; return If; }
+#line 75 "flex.l"
+{ update(); newColumn += 2; return If; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 69 "flex.l"
-{ column += 4; return Else; }
+#line 76 "flex.l"
+{ update(); newColumn += 4; return Else; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 70 "flex.l"
-{ column += 5; return While; }
+#line 77 "flex.l"
+{ update(); newColumn += 5; return While; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 71 "flex.l"
-{ column += 3; return Var; }
+#line 78 "flex.l"
+{ update(); newColumn += 3; return Var; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 72 "flex.l"
-{ column += 5; return Const; }
+#line 79 "flex.l"
+{ update(); newColumn += 5; return Const; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 73 "flex.l"
-{ column += 6; return Return; }
+#line 80 "flex.l"
+{ update(); newColumn += 6; return Return; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 74 "flex.l"
-{ column += 2; return Fn; }
+#line 81 "flex.l"
+{ update(); newColumn += 2; return Fn; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 75 "flex.l"
-{ column += 4; return Bool; }
+#line 82 "flex.l"
+{ update(); newColumn += 4; return Bool; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 76 "flex.l"
-{ column += 3; return Int; }
+#line 83 "flex.l"
+{ update(); newColumn += 3; return Int; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 77 "flex.l"
-{ column += 5; return Float; }
+#line 84 "flex.l"
+{ update(); newColumn += 5; return Float; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 78 "flex.l"
-{ column += 4; return True; }
+#line 85 "flex.l"
+{ update(); newColumn += 4; return True; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 79 "flex.l"
-{ column += 5; return False; }
+#line 86 "flex.l"
+{ update(); newColumn += 5; return False; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 81 "flex.l"
-{ column += 1; return Sum; }
+#line 88 "flex.l"
+{ update(); newColumn += 1; return Sum; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 82 "flex.l"
-{ column += 1; return Mult; }
+#line 89 "flex.l"
+{ update(); newColumn += 1; return Mult; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 83 "flex.l"
-{ column += 2; return Equals; }
+#line 90 "flex.l"
+{ update(); newColumn += 2; return Equals; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 84 "flex.l"
-{ column += 1; return OpenPar; }
+#line 91 "flex.l"
+{ update(); newColumn += 1; return OpenPar; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 85 "flex.l"
-{ column += 1; return ClosePar; }
+#line 92 "flex.l"
+{ update(); newColumn += 1; return ClosePar; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 86 "flex.l"
-{ column += 1; return OpenBra; }
+#line 93 "flex.l"
+{ update(); newColumn += 1; return OpenBra; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 87 "flex.l"
-{ column += 1; return CloseBra; }
+#line 94 "flex.l"
+{ update(); newColumn += 1; return CloseBra; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 88 "flex.l"
-{ column += 1; return SemiColon; }
+#line 95 "flex.l"
+{ update(); newColumn += 1; return SemiColon; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 89 "flex.l"
-{ column += 1; return Colon; }
+#line 96 "flex.l"
+{ update(); newColumn += 1; return Colon; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 91 "flex.l"
-{ column += strlen(yytext); return Id; }
+#line 98 "flex.l"
+{ update(); newColumn += strlen(yytext); return Id; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 92 "flex.l"
-{ column += 1; }
+#line 99 "flex.l"
+{ update(); newColumn += 1; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 93 "flex.l"
-{ column += 4; }
+#line 100 "flex.l"
+{ update(); newColumn += 4; }
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 94 "flex.l"
-{ column = 0; line += 1; }
+#line 101 "flex.l"
+{ update(); newColumn = 1; newLine += 1; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 96 "flex.l"
-{ return Invalid; }
+#line 103 "flex.l"
+{ update(); return Invalid; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 98 "flex.l"
+#line 105 "flex.l"
 ECHO;
 	YY_BREAK
-#line 991 "lex.yy.c"
+#line 998 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(IN_CMT):
 	yyterminate();
@@ -1993,7 +2000,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 98 "flex.l"
+#line 105 "flex.l"
 
 
 int main() {

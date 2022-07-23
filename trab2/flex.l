@@ -38,8 +38,15 @@ typedef enum _TOKEN {
 
 char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", /*"SINGLE_CMT", "OPEN_MULTI_CMT", "CLOSE_MULTI_CMT", "IN_MULTI_CMT",*/ "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON" };
 
-int column = 0;
-int line = 0;
+int column = 1;
+int line = 1;
+int newColumn = 1;
+int newLine = 1;
+
+void update(){
+  column = newColumn;
+  line = newLine;
+}
 
 %}
 
@@ -56,44 +63,44 @@ SINGLE_CMT \/\/.*
 
 %%
 
-"/*" { column += 2; BEGIN(IN_CMT); }
-<IN_CMT>"*/" { column += 2; BEGIN(INITIAL); }
-<IN_CMT>. { column += 1; }
-<IN_CMT>\n { column = 0; line += 1; }
-{SINGLE_CMT} { column += strlen(yytext); }
+"/*" { update(); newColumn += 2; BEGIN(IN_CMT); }
+<IN_CMT>"*/" { update(); newColumn += 2; BEGIN(INITIAL); }
+<IN_CMT>. { update(); newColumn += 1; }
+<IN_CMT>\n { update(); newColumn = 1; newLine += 1; }
+{SINGLE_CMT} { update(); newColumn += strlen(yytext); }
 
-{INTNUM} { column += strlen(yytext); return IntNum; }
-{FLOATNUM} { column += strlen(yytext); return FloatNum; }
+{INTNUM} { update(); newColumn += strlen(yytext); return IntNum; }
+{FLOATNUM} { update(); newColumn += strlen(yytext); return FloatNum; }
 
-if { column += 2; return If; }
-else { column += 4; return Else; }
-while { column += 5; return While; }
-var { column += 3; return Var; }
-const { column += 5; return Const; }
-return { column += 6; return Return; }
-fn { column += 2; return Fn; }
-bool { column += 4; return Bool; }
-int { column += 3; return Int; }
-float { column += 5; return Float; }
-true { column += 4; return True; }
-false { column += 5; return False; }
+if { update(); newColumn += 2; return If; }
+else { update(); newColumn += 4; return Else; }
+while { update(); newColumn += 5; return While; }
+var { update(); newColumn += 3; return Var; }
+const { update(); newColumn += 5; return Const; }
+return { update(); newColumn += 6; return Return; }
+fn { update(); newColumn += 2; return Fn; }
+bool { update(); newColumn += 4; return Bool; }
+int { update(); newColumn += 3; return Int; }
+float { update(); newColumn += 5; return Float; }
+true { update(); newColumn += 4; return True; }
+false { update(); newColumn += 5; return False; }
 
-"+" { column += 1; return Sum; }
-"*" { column += 1; return Mult; }
-"==" { column += 2; return Equals; }
-"(" { column += 1; return OpenPar; }
-")" { column += 1; return ClosePar; }
-"{" { column += 1; return OpenBra; }
-"}" { column += 1; return CloseBra; }
-";" { column += 1; return SemiColon; }
-":" { column += 1; return Colon; }
+"+" { update(); newColumn += 1; return Sum; }
+"*" { update(); newColumn += 1; return Mult; }
+"==" { update(); newColumn += 2; return Equals; }
+"(" { update(); newColumn += 1; return OpenPar; }
+")" { update(); newColumn += 1; return ClosePar; }
+"{" { update(); newColumn += 1; return OpenBra; }
+"}" { update(); newColumn += 1; return CloseBra; }
+";" { update(); newColumn += 1; return SemiColon; }
+":" { update(); newColumn += 1; return Colon; }
 
-{ID} { column += strlen(yytext); return Id; }
-" " { column += 1; }
-\t { column += 4; }
-\n { column = 0; line += 1; }
+{ID} { update(); newColumn += strlen(yytext); return Id; }
+" " { update(); newColumn += 1; }
+\t { update(); newColumn += 4; }
+\n { update(); newColumn = 1; newLine += 1; }
 
-. { return Invalid; }
+. { update(); return Invalid; }
 
 %%
 
