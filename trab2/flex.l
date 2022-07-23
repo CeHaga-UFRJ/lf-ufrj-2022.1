@@ -1,4 +1,9 @@
 %{
+/*
+Programa: Analisador lexico para a linguagem LF
+Autores: Carlos Bravo, Markson Arguello e Pedro Ancelmo
+Data: 21/07/2022
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

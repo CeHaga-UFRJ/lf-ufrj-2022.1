@@ -1,5 +1,15 @@
+/*
+Programa: Esse codigo nao tem aplicacao pratica,
+  mas eh uma boa forma de mostrar nosso analisador lexico funcionando
+Autores: Carlos Bravo, Markson Arguello e Pedro Ancelmo
+Data: 22/07/2022
+*/
 int main(){
+  // Variavel a comeca com 5
   int a = 5;
+  // Variavel b recebe 2 a mais que a variavel a
   int b = a + 2;
   return 0;
 }
+
+
