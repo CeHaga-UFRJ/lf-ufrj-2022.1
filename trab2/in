@@ -6,6 +6,7 @@ while enum var
 // este eh um comentario
 /* isso eh /
 outro comentario  */ +
+,
 * ==
 a
 (;) {:}

@@ -31,10 +31,11 @@ typedef enum _TOKEN {
   OpenBra,
   CloseBra,
   SemiColon,
-  Colon
+  Colon,
+  Comma
 } TOKEN;
 
-char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "EQUAL_SIGN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON" };
+char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "EQSIGN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON", "COMMA" };
 
 // Contadores de linha e coluna
 int column = 1;
@@ -99,6 +100,7 @@ false { update(); newColumn += 5; return False; }
 "}" { update(); newColumn += 1; return CloseBra; }
 ";" { update(); newColumn += 1; return SemiColon; }
 ":" { update(); newColumn += 1; return Colon; }
+"," { update(); newColumn += 1; return Comma; }
 
 {ID} { update(); newColumn += strlen(yytext); return Id; }
 " " { update(); newColumn += 1; }
@@ -116,7 +118,7 @@ int main() {
   // Enquanto nao acabar o arquivo
   while((token = (TOKEN)yylex()) != Eof){
     // Imprime o que achou e para em caso de erro
-    printf("(%s,%s,%d,%d)\n", tokens[token], yytext, line, column);
+    printf("(%s %s %d %d)\n", tokens[token], yytext, line, column);
     if(token == Invalid) break;
   }
 
