@@ -7,40 +7,7 @@ Data: 21/07/2022
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// Tokens validos com representacao textual
-typedef enum _TOKEN {
-  Eof = 0,
-  Invalid,
-  If,
-  Else,
-  While,
-  Var,
-  Const,
-  Return,
-  Fn,
-  EqSign,
-  Bool,
-  Int,
-  Float,
-  True,
-  False,
-  Id,
-  IntNum,
-  FloatNum,
-  Sum,
-  Mult,
-  Equals,
-  OpenPar,
-  ClosePar,
-  OpenBra,
-  CloseBra,
-  SemiColon,
-  Colon,
-  Comma
-} TOKEN;
-
-char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "EQSIGN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON", "COMMA" };
+#include "lf.tab.h"
 
 // Contadores de linha e coluna
 int column = 1;
@@ -121,7 +88,7 @@ int main() {
   int token;
 
   // Enquanto nao acabar o arquivo
-  while((token = (TOKEN)yylex()) != Eof){
+  while((token = (TOKEN)yylex()) != 0){
     // Imprime o que achou e para em caso de erro
     printf("(%s %s %d %d)\n", tokens[token], yytext, line, column);
     if(token == Invalid) break;
