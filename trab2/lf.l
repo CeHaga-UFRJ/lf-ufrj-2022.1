@@ -45,8 +45,8 @@ SINGLE_CMT \/\/.*
 {SINGLE_CMT} { update(); newColumn += strlen(yytext); }
 
   /* Numeros int e float */
-{INTNUM} { update(); newColumn += strlen(yytext); return IntNum; }
-{FLOATNUM} { update(); newColumn += strlen(yytext); return FloatNum; }
+{INTNUM} { update(); newColumn += strlen(yytext); yylval.intValue = atoi(yytext); return IntNum; }
+{FLOATNUM} { update(); newColumn += strlen(yytext); yylval.floatValue = atof(yytext); return FloatNum; }
 
   /* Palavras reservadas */
 if { update(); newColumn += 2; return If; }
@@ -74,7 +74,7 @@ false { update(); newColumn += 5; return False; }
 ":" { update(); newColumn += 1; return Colon; }
 "," { update(); newColumn += 1; return Comma; }
 
-{ID} { update(); newColumn += strlen(yytext); return Id; }
+{ID} { update(); newColumn += strlen(yytext); yylval.text = strdup(yytext); return Id; }
 " " { update(); newColumn += 1; }
 \t { update(); newColumn += 4; }
 \n { update(); newColumn = 1; newLine += 1; }
@@ -83,18 +83,3 @@ false { update(); newColumn += 5; return False; }
 . { update(); return Invalid; }
 
 %%
-
-int main() {
-  int token;
-
-  // Enquanto nao acabar o arquivo
-  while((token = (TOKEN)yylex()) != 0){
-    // Imprime o que achou e para em caso de erro
-    printf("(%s %s %d %d)\n", tokens[token], yytext, line, column);
-    if(token == Invalid) break;
-  }
-
-  printf("\n");
-  
-  return 0;
-}

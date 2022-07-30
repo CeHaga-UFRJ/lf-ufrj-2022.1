@@ -8,7 +8,7 @@ int yylex();
 
 %union{
   int intValue;
-  char* text;
+  char *text;
   float floatValue;
 }
 
@@ -28,9 +28,9 @@ int yylex();
 %token Float
 %token True
 %token False
-%token Id
-%token IntNum
-%token FloatNum
+%token <text> Id
+%token <intValue> IntNum
+%token <floatValue> FloatNum
 %token Sum
 %token Mult
 %token Equals
@@ -43,57 +43,38 @@ int yylex();
 %token Comma
 
 %%
-program: 
-  | program programStatement SemiColon
-  ;
+program:
+        | program programStatement SemiColon
+;
+
+programStatement: declConst
+                | declVar
+                | declFun
+;
+
+declConst: Const Id Colon type EqSign value { printf("Inicializou constante %s usando regra declConst\n", $2); }
+;
+
+declVar: Var Id Colon type atrVar { printf("Inicializou variavel %s usando regra declVar ", $2); }
+;
+
+atrVar: { printf("e não atribuiu valor\n"); }
+      | EqSign value { printf("E atribuiu valor usando regra atrVar\n"); }
+
+value: IntNum
+     | FloatNum
+     | True
+     | False
+;
 
 type: Int
-  | Float
-  | Bool
-  ;
-
-value: True
-  | False
-  | IntNum
-  | FloatNum
-  ;
-
-programStatement: declaration
-  | function
-  ;
-
-declaration: Var Id Colon type
-  | Var Id Colon type EqSign value
-  | Const Id Colon type EqSign value
-  ;
-
-statements:
-  | statements statement SemiColon
-  ;
-
-statement: attribution
-  | conditional
-  | loop
-  | Return exp
-  ;
-
-calclist:
- | calclist exp EOL { printf("= %d\n", $2); }
- ;
-
-exp: factor
- | exp ADD factor { $$ = $1 + $3; }
- | exp SUB factor { $$ = $1 - $3; }
- ;
-
-factor: term
- | factor MUL term { $$ = $1 * $3; }
- | factor DIV term { $$ = $1 / $3; }
- ;
-
-term: NUMBER
- | ABS term   { $$ = $2 >= 0? $2 : - $2; }
+    | Float
+    | Bool
 ;
+
+declFun:
+;
+
 %%
 
 int main(int argc, char **argv){
@@ -102,5 +83,5 @@ int main(int argc, char **argv){
 }
 
 int yyerror(char *s){
-  fprintf(stderr, "error: %s\n", s);
+  fprintf(stderr, "Error: %s\n", s);
 }

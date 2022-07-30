@@ -491,8 +491,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "flex.l"
-#line 2 "flex.l"
+#line 1 "lf.l"
+#line 2 "lf.l"
 /*
 Programa: Analisador lexico para a linguagem LF
 Autores: Carlos Bravo, Markson Arguello e Pedro Ancelmo
@@ -501,40 +501,7 @@ Data: 21/07/2022
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-// Tokens validos com representacao textual
-typedef enum _TOKEN {
-  Eof = 0,
-  Invalid,
-  If,
-  Else,
-  While,
-  Var,
-  Const,
-  Return,
-  Fn,
-  EqSign,
-  Bool,
-  Int,
-  Float,
-  True,
-  False,
-  Id,
-  IntNum,
-  FloatNum,
-  Sum,
-  Mult,
-  Equals,
-  OpenPar,
-  ClosePar,
-  OpenBra,
-  CloseBra,
-  SemiColon,
-  Colon,
-  Comma
-} TOKEN;
-
-char* tokens[] = { "EOF", "ERROR", "IF", "ELSE", "WHILE", "VAR", "CONST", "RETURN", "FN", "EQSIGN", "BOOL", "INT", "FLOAT", "TRUE", "FALSE", "ID", "INTNUM", "FLOATNUM", "SUM", "MULT", "EQUALS", "OPENPAR", "CLOSEPAR", "OPENBRA", "CLOSEBRA", "SEMICOL", "COLON", "COMMA" };
+#include "lf.tab.h"
 
 // Contadores de linha e coluna
 int column = 1;
@@ -550,9 +517,9 @@ void update(){
   line = newLine;
 }
 
-#line 554 "lex.yy.c"
+#line 521 "lex.yy.c"
 
-#line 556 "lex.yy.c"
+#line 523 "lex.yy.c"
 
 #define INITIAL 0
 #define IN_CMT 1
@@ -770,11 +737,11 @@ YY_DECL
 		}
 
 	{
-#line 72 "flex.l"
+#line 39 "lf.l"
 
-#line 74 "flex.l"
+#line 41 "lf.l"
   /* Se leu /* entra no estado "IN_CMT" e ignora qualquer caractere dentro, exceto em caso de fechar comentario */
-#line 778 "lex.yy.c"
+#line 745 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -833,190 +800,190 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 75 "flex.l"
+#line 42 "lf.l"
 { update(); newColumn += 2; BEGIN(IN_CMT); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 76 "flex.l"
+#line 43 "lf.l"
 { update(); newColumn += 2; BEGIN(INITIAL); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 77 "flex.l"
+#line 44 "lf.l"
 { update(); newColumn += 1; }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 78 "flex.l"
+#line 45 "lf.l"
 { update(); newColumn = 1; newLine += 1; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 79 "flex.l"
+#line 46 "lf.l"
 { update(); newColumn += strlen(yytext); }
 	YY_BREAK
 /* Numeros int e float */
 case 6:
 YY_RULE_SETUP
-#line 82 "flex.l"
-{ update(); newColumn += strlen(yytext); return IntNum; }
+#line 49 "lf.l"
+{ update(); newColumn += strlen(yytext); yylval.intValue = atoi(yytext); return IntNum; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 83 "flex.l"
-{ update(); newColumn += strlen(yytext); return FloatNum; }
+#line 50 "lf.l"
+{ update(); newColumn += strlen(yytext); yylval.floatValue = atof(yytext); return FloatNum; }
 	YY_BREAK
 /* Palavras reservadas */
 case 8:
 YY_RULE_SETUP
-#line 86 "flex.l"
+#line 53 "lf.l"
 { update(); newColumn += 2; return If; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 87 "flex.l"
+#line 54 "lf.l"
 { update(); newColumn += 4; return Else; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 88 "flex.l"
+#line 55 "lf.l"
 { update(); newColumn += 5; return While; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 89 "flex.l"
+#line 56 "lf.l"
 { update(); newColumn += 3; return Var; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 "flex.l"
+#line 57 "lf.l"
 { update(); newColumn += 5; return Const; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 91 "flex.l"
+#line 58 "lf.l"
 { update(); newColumn += 6; return Return; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 92 "flex.l"
+#line 59 "lf.l"
 { update(); newColumn += 2; return Fn; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 93 "flex.l"
+#line 60 "lf.l"
 { update(); newColumn += 4; return Bool; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 94 "flex.l"
+#line 61 "lf.l"
 { update(); newColumn += 3; return Int; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 95 "flex.l"
+#line 62 "lf.l"
 { update(); newColumn += 5; return Float; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 96 "flex.l"
+#line 63 "lf.l"
 { update(); newColumn += 4; return True; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 97 "flex.l"
+#line 64 "lf.l"
 { update(); newColumn += 5; return False; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 99 "flex.l"
+#line 66 "lf.l"
 { update(); newColumn += 1; return Sum; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 100 "flex.l"
+#line 67 "lf.l"
 { update(); newColumn += 1; return Mult; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 101 "flex.l"
+#line 68 "lf.l"
 { update(); newColumn += 2; return Equals; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 102 "flex.l"
+#line 69 "lf.l"
 { update(); newColumn += 1; return EqSign; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 103 "flex.l"
+#line 70 "lf.l"
 { update(); newColumn += 1; return OpenPar; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 104 "flex.l"
+#line 71 "lf.l"
 { update(); newColumn += 1; return ClosePar; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 105 "flex.l"
+#line 72 "lf.l"
 { update(); newColumn += 1; return OpenBra; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 106 "flex.l"
+#line 73 "lf.l"
 { update(); newColumn += 1; return CloseBra; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 107 "flex.l"
+#line 74 "lf.l"
 { update(); newColumn += 1; return SemiColon; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 108 "flex.l"
+#line 75 "lf.l"
 { update(); newColumn += 1; return Colon; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 109 "flex.l"
+#line 76 "lf.l"
 { update(); newColumn += 1; return Comma; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 111 "flex.l"
-{ update(); newColumn += strlen(yytext); return Id; }
+#line 78 "lf.l"
+{ update(); newColumn += strlen(yytext); yylval.text = strdup(yytext); return Id; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 112 "flex.l"
+#line 79 "lf.l"
 { update(); newColumn += 1; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 113 "flex.l"
+#line 80 "lf.l"
 { update(); newColumn += 4; }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 114 "flex.l"
+#line 81 "lf.l"
 { update(); newColumn = 1; newLine += 1; }
 	YY_BREAK
 /* Ultima regra, em caso de caractere invalido */
 case 35:
 YY_RULE_SETUP
-#line 117 "flex.l"
+#line 84 "lf.l"
 { update(); return Invalid; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 119 "flex.l"
+#line 86 "lf.l"
 ECHO;
 	YY_BREAK
-#line 1020 "lex.yy.c"
+#line 987 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(IN_CMT):
 	yyterminate();
@@ -2022,21 +1989,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 119 "flex.l"
+#line 86 "lf.l"
 
-
-int main() {
-  int token;
-
-  // Enquanto nao acabar o arquivo
-  while((token = (TOKEN)yylex()) != Eof){
-    // Imprime o que achou e para em caso de erro
-    printf("(%s %s %d %d)\n", tokens[token], yytext, line, column);
-    if(token == Invalid) break;
-  }
-
-  printf("\n");
-  
-  return 0;
-}
 
