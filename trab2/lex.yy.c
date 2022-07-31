@@ -828,162 +828,172 @@ YY_RULE_SETUP
 case 6:
 YY_RULE_SETUP
 #line 49 "lf.l"
-{ update(); newColumn += strlen(yytext); yylval.intValue = atoi(yytext); return IntNum; }
+{ 
+  update();
+  newColumn += strlen(yytext);
+  yylval.intValue = atoi(yytext);
+  return IntNum;
+}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 50 "lf.l"
-{ update(); newColumn += strlen(yytext); yylval.floatValue = atof(yytext); return FloatNum; }
+#line 56 "lf.l"
+{ 
+  update();
+  newColumn += strlen(yytext);
+  yylval.floatValue = atof(yytext);
+  return FloatNum;
+}
 	YY_BREAK
 /* Palavras reservadas */
 case 8:
 YY_RULE_SETUP
-#line 53 "lf.l"
-{ update(); newColumn += 2; return If; }
+#line 65 "lf.l"
+{ update(); newColumn += 2; yylval.text = strdup(yytext); return If; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 54 "lf.l"
-{ update(); newColumn += 4; return Else; }
+#line 66 "lf.l"
+{ update(); newColumn += 4; yylval.text = strdup(yytext); return Else; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 55 "lf.l"
-{ update(); newColumn += 5; return While; }
+#line 67 "lf.l"
+{ update(); newColumn += 5; yylval.text = strdup(yytext); return While; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 56 "lf.l"
-{ update(); newColumn += 3; return Var; }
+#line 68 "lf.l"
+{ update(); newColumn += 3; yylval.text = strdup(yytext); return Var; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "lf.l"
-{ update(); newColumn += 5; return Const; }
+#line 69 "lf.l"
+{ update(); newColumn += 5; yylval.text = strdup(yytext); return Const; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 58 "lf.l"
-{ update(); newColumn += 6; return Return; }
+#line 70 "lf.l"
+{ update(); newColumn += 6; yylval.text = strdup(yytext); return Return; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 59 "lf.l"
-{ update(); newColumn += 2; return Fn; }
+#line 71 "lf.l"
+{ update(); newColumn += 2; yylval.text = strdup(yytext); return Fn; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 60 "lf.l"
-{ update(); newColumn += 4; return Bool; }
+#line 72 "lf.l"
+{ update(); newColumn += 4; yylval.text = strdup(yytext); return Bool; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 61 "lf.l"
-{ update(); newColumn += 3; return Int; }
+#line 73 "lf.l"
+{ update(); newColumn += 3; yylval.text = strdup(yytext); return Int; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 62 "lf.l"
-{ update(); newColumn += 5; return Float; }
+#line 74 "lf.l"
+{ update(); newColumn += 5; yylval.text = strdup(yytext); return Float; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 63 "lf.l"
-{ update(); newColumn += 4; return True; }
+#line 75 "lf.l"
+{ update(); newColumn += 4; yylval.text = strdup(yytext); return True; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 64 "lf.l"
-{ update(); newColumn += 5; return False; }
+#line 76 "lf.l"
+{ update(); newColumn += 5; yylval.text = strdup(yytext); return False; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 66 "lf.l"
-{ update(); newColumn += 1; return Sum; }
+#line 78 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return Sum; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 67 "lf.l"
-{ update(); newColumn += 1; return Mult; }
+#line 79 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return Mult; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 68 "lf.l"
-{ update(); newColumn += 2; return Equals; }
+#line 80 "lf.l"
+{ update(); newColumn += 2; yylval.text = strdup(yytext); return Equals; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 69 "lf.l"
-{ update(); newColumn += 1; return EqSign; }
+#line 81 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return EqSign; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 70 "lf.l"
-{ update(); newColumn += 1; return OpenPar; }
+#line 82 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return OpenPar; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 71 "lf.l"
-{ update(); newColumn += 1; return ClosePar; }
+#line 83 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return ClosePar; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 72 "lf.l"
-{ update(); newColumn += 1; return OpenBra; }
+#line 84 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return OpenBra; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 73 "lf.l"
-{ update(); newColumn += 1; return CloseBra; }
+#line 85 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return CloseBra; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 74 "lf.l"
-{ update(); newColumn += 1; return SemiColon; }
+#line 86 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return SemiColon; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 75 "lf.l"
-{ update(); newColumn += 1; return Colon; }
+#line 87 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return Colon; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 76 "lf.l"
-{ update(); newColumn += 1; return Comma; }
+#line 88 "lf.l"
+{ update(); newColumn += 1; yylval.text = strdup(yytext); return Comma; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 78 "lf.l"
+#line 90 "lf.l"
 { update(); newColumn += strlen(yytext); yylval.text = strdup(yytext); return Id; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 79 "lf.l"
+#line 91 "lf.l"
 { update(); newColumn += 1; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 80 "lf.l"
+#line 92 "lf.l"
 { update(); newColumn += 4; }
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 81 "lf.l"
+#line 93 "lf.l"
 { update(); newColumn = 1; newLine += 1; }
 	YY_BREAK
 /* Ultima regra, em caso de caractere invalido */
 case 35:
 YY_RULE_SETUP
-#line 84 "lf.l"
+#line 96 "lf.l"
 { update(); return Invalid; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 86 "lf.l"
+#line 98 "lf.l"
 ECHO;
 	YY_BREAK
-#line 987 "lex.yy.c"
+#line 997 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(IN_CMT):
 	yyterminate();
@@ -1989,6 +1999,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 86 "lf.l"
+#line 98 "lf.l"
 
 

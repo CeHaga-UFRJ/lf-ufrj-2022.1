@@ -14,67 +14,109 @@ int yylex();
 
 %start program
 
-%token Invalid
-%token If
-%token Else
-%token While
-%token Var
-%token Const
-%token Return
-%token Fn
-%token EqSign
-%token Bool
-%token Int
-%token Float
-%token True
-%token False
+%token <text> Invalid
+%token <text> If
+%token <text> Else
+%token <text> While
+%token <text> Var
+%token <text> Const
+%token <text> Return
+%token <text> Fn
+%token <text> EqSign
+%token <text> Bool
+%token <text> Int
+%token <text> Float
+%token <text> True
+%token <text> False
 %token <text> Id
 %token <intValue> IntNum
 %token <floatValue> FloatNum
-%token Sum
-%token Mult
-%token Equals
-%token OpenPar
-%token ClosePar
-%token OpenBra
-%token CloseBra
-%token SemiColon
-%token Colon
-%token Comma
+%token <text> Sum
+%token <text> Mult
+%token <text> Equals
+%token <text> OpenPar
+%token <text> ClosePar
+%token <text> OpenBra
+%token <text> CloseBra
+%token <text> SemiColon
+%token <text> Colon
+%token <text> Comma
 
 %%
-program:
-        | program programStatement SemiColon
+program: { printf("program -> \u03B5\n"); }
+        | program programStatement SemiColon { printf("program -> program programStatement %s\n", $3); }
 ;
 
-programStatement: declConst
-                | declVar
-                | declFun
+programStatement: declConst { printf("programStatement -> declConst\n"); }
+                | declVar { printf("programStatement -> declVar\n"); }
+                | declFun { printf("programStatement -> declFun\n"); }
 ;
 
-declConst: Const Id Colon type EqSign value { printf("Inicializou constante %s usando regra declConst\n", $2); }
+declId: Id Colon type { printf("declId -> %s %s type\n", $1, $2); }
 ;
 
-declVar: Var Id Colon type atrVar { printf("Inicializou variavel %s usando regra declVar ", $2); }
+declConst: Const declId atrValue { printf("declConst -> %s declId atrValue\n", $1); }
 ;
 
-atrVar: { printf("e não atribuiu valor\n"); }
-      | EqSign value { printf("E atribuiu valor usando regra atrVar\n"); }
-
-value: IntNum
-     | FloatNum
-     | True
-     | False
+declVar: Var declId atrVar { printf("declVar -> %s declId atrVar\n", $1); }
 ;
 
-type: Int
-    | Float
-    | Bool
+atrVar: { printf("atrVar -> \u03B5\n"); }
+      | atrValue { printf("atrVar -> atrValue\n"); }
+
+value: IntNum { printf("value -> %d\n", $1); }
+     | FloatNum { printf("value -> %f\n", $1); }
+     | True { printf("value -> %s\n", $1); }
+     | False { printf("value -> %s\n", $1); }
 ;
 
-declFun:
+type: Int { printf("type -> %s\n", $1); }
+    | Float { printf("type -> %s\n", $1); }
+    | Bool { printf("type -> %s\n", $1); }
 ;
 
+atrValue: EqSign value { printf("atrValue -> %s value\n", $1); }
+;
+
+declFun: Fn Id OpenPar funParam ClosePar Colon type OpenBra funStatements CloseBra { printf("declFun -> %s %s %s funParam %s %s type %s funStatements %s\n", $1, $2, $3, $5, $6, $8, $10); }
+;
+
+funParam: { printf("funParam -> \u03B5\n"); }
+        | funParams { printf("funParam -> funParams\n"); }
+;
+
+funParams: declId { printf("funParams -> declId\n"); }
+         | funParams Comma declId { printf("funParams -> funParams %s declId\n", $2); }
+;
+
+funStatements: { printf("funStatements -> \u03B5\n"); }
+             | funStatements funStatement SemiColon { printf("funStatements -> funStatements funStatement %s\n", $3); }
+;
+
+funStatement: atribution { printf("funStatement -> atribution\n"); }
+            | conditional { printf("funStatement -> conditional\n"); }
+            | loop { printf("funStatement -> loop\n"); }
+            | ret { printf("funStatement -> ret\n"); }
+;
+
+atribution: Id atrValue { printf("atribution -> %s atrValue\n", $1); }
+;
+
+conditional: If OpenPar condition ClosePar OpenBra funStatements CloseBra { printf("conditional -> %s %s condition %s %s funStatements %s\n", $1, $2, $4, $5, $7); }
+           | If OpenPar condition ClosePar OpenBra funStatements CloseBra Else OpenBra funStatements CloseBra { printf("conditional -> %s %s condition %s %s funStatements %s %s %s funStatements %s\n", $1, $2, $4, $5, $7, $8, $9, $11); }
+;
+
+condition:
+;
+
+loop: While OpenPar condition ClosePar OpenBra funStatements CloseBra { printf("loop -> %s %s condition %s %s funStatements %s\n", $1, $2, $4, $5, $7); }
+;
+
+ret: Return exp { printf("ret -> %s exp\n", $1); }
+;
+
+exp:
+;
 %%
 
 int main(int argc, char **argv){

@@ -45,34 +45,46 @@ SINGLE_CMT \/\/.*
 {SINGLE_CMT} { update(); newColumn += strlen(yytext); }
 
   /* Numeros int e float */
-{INTNUM} { update(); newColumn += strlen(yytext); yylval.intValue = atoi(yytext); return IntNum; }
-{FLOATNUM} { update(); newColumn += strlen(yytext); yylval.floatValue = atof(yytext); return FloatNum; }
+{INTNUM} { 
+  update();
+  newColumn += strlen(yytext);
+  yylval.intValue = atoi(yytext);
+  return IntNum;
+}
+
+{FLOATNUM} { 
+  update();
+  newColumn += strlen(yytext);
+  yylval.floatValue = atof(yytext);
+  return FloatNum;
+}
+
 
   /* Palavras reservadas */
-if { update(); newColumn += 2; return If; }
-else { update(); newColumn += 4; return Else; }
-while { update(); newColumn += 5; return While; }
-var { update(); newColumn += 3; return Var; }
-const { update(); newColumn += 5; return Const; }
-return { update(); newColumn += 6; return Return; }
-fn { update(); newColumn += 2; return Fn; }
-bool { update(); newColumn += 4; return Bool; }
-int { update(); newColumn += 3; return Int; }
-float { update(); newColumn += 5; return Float; }
-true { update(); newColumn += 4; return True; }
-false { update(); newColumn += 5; return False; }
+if { update(); newColumn += 2; yylval.text = strdup(yytext); return If; }
+else { update(); newColumn += 4; yylval.text = strdup(yytext); return Else; }
+while { update(); newColumn += 5; yylval.text = strdup(yytext); return While; }
+var { update(); newColumn += 3; yylval.text = strdup(yytext); return Var; }
+const { update(); newColumn += 5; yylval.text = strdup(yytext); return Const; }
+return { update(); newColumn += 6; yylval.text = strdup(yytext); return Return; }
+fn { update(); newColumn += 2; yylval.text = strdup(yytext); return Fn; }
+bool { update(); newColumn += 4; yylval.text = strdup(yytext); return Bool; }
+int { update(); newColumn += 3; yylval.text = strdup(yytext); return Int; }
+float { update(); newColumn += 5; yylval.text = strdup(yytext); return Float; }
+true { update(); newColumn += 4; yylval.text = strdup(yytext); return True; }
+false { update(); newColumn += 5; yylval.text = strdup(yytext); return False; }
 
-"+" { update(); newColumn += 1; return Sum; }
-"*" { update(); newColumn += 1; return Mult; }
-"==" { update(); newColumn += 2; return Equals; }
-"=" { update(); newColumn += 1; return EqSign; }
-"(" { update(); newColumn += 1; return OpenPar; }
-")" { update(); newColumn += 1; return ClosePar; }
-"{" { update(); newColumn += 1; return OpenBra; }
-"}" { update(); newColumn += 1; return CloseBra; }
-";" { update(); newColumn += 1; return SemiColon; }
-":" { update(); newColumn += 1; return Colon; }
-"," { update(); newColumn += 1; return Comma; }
+"+" { update(); newColumn += 1; yylval.text = strdup(yytext); return Sum; }
+"*" { update(); newColumn += 1; yylval.text = strdup(yytext); return Mult; }
+"==" { update(); newColumn += 2; yylval.text = strdup(yytext); return Equals; }
+"=" { update(); newColumn += 1; yylval.text = strdup(yytext); return EqSign; }
+"(" { update(); newColumn += 1; yylval.text = strdup(yytext); return OpenPar; }
+")" { update(); newColumn += 1; yylval.text = strdup(yytext); return ClosePar; }
+"{" { update(); newColumn += 1; yylval.text = strdup(yytext); return OpenBra; }
+"}" { update(); newColumn += 1; yylval.text = strdup(yytext); return CloseBra; }
+";" { update(); newColumn += 1; yylval.text = strdup(yytext); return SemiColon; }
+":" { update(); newColumn += 1; yylval.text = strdup(yytext); return Colon; }
+"," { update(); newColumn += 1; yylval.text = strdup(yytext); return Comma; }
 
 {ID} { update(); newColumn += strlen(yytext); yylval.text = strdup(yytext); return Id; }
 " " { update(); newColumn += 1; }

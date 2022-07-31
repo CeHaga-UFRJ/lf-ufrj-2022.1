@@ -480,16 +480,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   19
+#define YYLAST   37
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  30
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  9
+#define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  18
+#define YYNRULES  27
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  28
+#define YYNSTATES  43
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   284
@@ -540,7 +540,8 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    46,    46,    47,    50,    51,    52,    55,    58,    61,
-      62,    64,    65,    66,    67,    70,    71,    72,    75
+      64,    65,    67,    68,    69,    70,    73,    74,    75,    78,
+      81,    84,    85,    88,    89,    92,    93,    96
 };
 #endif
 
@@ -553,8 +554,9 @@ static const char *const yytname[] =
   "Const", "Return", "Fn", "EqSign", "Bool", "Int", "Float", "True",
   "False", "Id", "IntNum", "FloatNum", "Sum", "Mult", "Equals", "OpenPar",
   "ClosePar", "OpenBra", "CloseBra", "SemiColon", "Colon", "Comma",
-  "$accept", "program", "programStatement", "declConst", "declVar",
-  "atrVar", "value", "type", "declFun", YY_NULLPTR
+  "$accept", "program", "programStatement", "declId", "declConst",
+  "declVar", "atrVar", "value", "type", "atrValue", "declFun", "funParam",
+  "funParams", "funStatements", "funStatement", YY_NULLPTR
 };
 #endif
 
@@ -569,7 +571,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-25)
+#define YYPACT_NINF (-24)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -583,9 +585,11 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -25,     0,   -25,   -11,    -5,   -24,   -25,   -25,   -25,   -15,
-     -13,   -25,    -3,    -3,   -25,   -25,   -25,     3,     5,   -14,
-     -25,   -14,   -25,   -25,   -25,   -25,   -25,   -25
+     -24,     1,   -24,   -10,   -10,    -7,   -23,   -24,   -24,   -24,
+     -11,     4,     4,    -5,   -24,     0,   -13,   -24,   -24,   -24,
+     -10,   -24,   -24,   -24,   -24,   -24,   -24,   -24,   -24,   -24,
+     -24,    -3,    -9,    -6,   -10,     0,   -24,    -2,   -24,    -1,
+     -24,    -8,   -24
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,21 +597,25 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,    18,     1,     0,     0,     0,     4,     5,     6,     0,
-       0,     3,     0,     0,    17,    15,    16,     9,     0,     0,
-       8,     0,    13,    14,    11,    12,    10,     7
+       2,     0,     1,     0,     0,     0,     0,     4,     5,     6,
+       0,    10,     0,     0,     3,     0,     0,     9,    11,     8,
+      21,    18,    16,    17,     7,    14,    15,    12,    13,    19,
+      23,     0,    22,     0,     0,     0,    24,     0,    25,    27,
+      20,     0,    26
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -25,   -25,   -25,   -25,   -25,   -25,    -4,     6,   -25
+     -24,   -24,   -24,    -4,   -24,   -24,   -24,   -24,     2,    12,
+     -24,   -24,   -24,   -24,   -24
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     5,     6,     7,    20,    26,    17,     8
+      -1,     1,     6,    11,     7,     8,    17,    29,    24,    18,
+       9,    31,    32,    39,    41
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -615,37 +623,45 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,    22,    23,    11,    24,    25,     9,     3,     4,    14,
-      15,    16,    10,    12,    19,    13,    21,    27,     0,    18
+      12,     2,    25,    26,    14,    27,    28,    10,     3,     4,
+      13,     5,    21,    22,    23,    16,    30,    15,    20,    42,
+      34,    33,    35,    38,    19,    40,     0,     0,     0,     0,
+      36,     0,     0,     0,     0,     0,     0,    37
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    15,    16,    27,    18,    19,    17,     7,     8,    12,
-      13,    14,    17,    28,    11,    28,    11,    21,    -1,    13
+       4,     0,    15,    16,    27,    18,    19,    17,     7,     8,
+      17,    10,    12,    13,    14,    11,    20,    28,    23,    27,
+      29,    24,    28,    25,    12,    26,    -1,    -1,    -1,    -1,
+      34,    -1,    -1,    -1,    -1,    -1,    -1,    35
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    31,     0,     7,     8,    32,    33,    34,    38,    17,
-      17,    27,    28,    28,    12,    13,    14,    37,    37,    11,
-      35,    11,    15,    16,    18,    19,    36,    36
+       0,    31,     0,     7,     8,    10,    32,    34,    35,    40,
+      17,    33,    33,    17,    27,    28,    11,    36,    39,    39,
+      23,    12,    13,    14,    38,    15,    16,    18,    19,    37,
+      33,    41,    42,    24,    29,    28,    33,    38,    25,    43,
+      26,    44,    27
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
        0,    30,    31,    31,    32,    32,    32,    33,    34,    35,
-      35,    36,    36,    36,    36,    37,    37,    37,    38
+      36,    36,    37,    37,    37,    37,    38,    38,    38,    39,
+      40,    41,    41,    42,    42,    43,    43,    44
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     3,     1,     1,     1,     6,     5,     0,
-       2,     1,     1,     1,     1,     1,     1,     1,     0
+       0,     2,     0,     3,     1,     1,     1,     3,     3,     3,
+       0,     1,     1,     1,     1,     1,     1,     1,     1,     2,
+      10,     0,     1,     1,     3,     0,     3,     0
 };
 
 
@@ -1340,32 +1356,158 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2:
+#line 46 "lf.y"
+         { printf("program -> \u03B5\n"); }
+#line 1363 "lf.tab.c"
+    break;
+
+  case 3:
+#line 47 "lf.y"
+                                             { printf("program -> program programStatement %s\n", (yyvsp[0].text)); }
+#line 1369 "lf.tab.c"
+    break;
+
+  case 4:
+#line 50 "lf.y"
+                            { printf("programStatement -> declConst\n"); }
+#line 1375 "lf.tab.c"
+    break;
+
+  case 5:
+#line 51 "lf.y"
+                          { printf("programStatement -> declVar\n"); }
+#line 1381 "lf.tab.c"
+    break;
+
+  case 6:
+#line 52 "lf.y"
+                          { printf("programStatement -> declFun\n"); }
+#line 1387 "lf.tab.c"
+    break;
+
   case 7:
 #line 55 "lf.y"
-                                            { printf("Inicializou constante %s usando regra declConst\n", (yyvsp[-4].text)); }
-#line 1347 "lf.tab.c"
+                      { printf("declId -> %s %s type\n", (yyvsp[-2].text), (yyvsp[-1].text)); }
+#line 1393 "lf.tab.c"
     break;
 
   case 8:
 #line 58 "lf.y"
-                                  { printf("Inicializou variavel %s usando regra declVar ", (yyvsp[-3].text)); }
-#line 1353 "lf.tab.c"
+                                 { printf("declConst -> %s declId atrValue\n", (yyvsp[-2].text)); }
+#line 1399 "lf.tab.c"
     break;
 
   case 9:
 #line 61 "lf.y"
-        { printf("e não atribuiu valor\n"); }
-#line 1359 "lf.tab.c"
+                           { printf("declVar -> %s declId atrVar\n", (yyvsp[-2].text)); }
+#line 1405 "lf.tab.c"
     break;
 
   case 10:
-#line 62 "lf.y"
-                     { printf("E atribui valor usando regra atrVar\n"); }
-#line 1365 "lf.tab.c"
+#line 64 "lf.y"
+        { printf("atrVar -> \u03B5\n"); }
+#line 1411 "lf.tab.c"
+    break;
+
+  case 11:
+#line 65 "lf.y"
+                 { printf("atrVar -> atrValue\n"); }
+#line 1417 "lf.tab.c"
+    break;
+
+  case 12:
+#line 67 "lf.y"
+              { printf("value -> %d\n", (yyvsp[0].intValue)); }
+#line 1423 "lf.tab.c"
+    break;
+
+  case 13:
+#line 68 "lf.y"
+                { printf("value -> %f\n", (yyvsp[0].floatValue)); }
+#line 1429 "lf.tab.c"
+    break;
+
+  case 14:
+#line 69 "lf.y"
+            { printf("value -> %s\n", (yyvsp[0].text)); }
+#line 1435 "lf.tab.c"
+    break;
+
+  case 15:
+#line 70 "lf.y"
+             { printf("value -> %s\n", (yyvsp[0].text)); }
+#line 1441 "lf.tab.c"
+    break;
+
+  case 16:
+#line 73 "lf.y"
+          { printf("type -> %s\n", (yyvsp[0].text)); }
+#line 1447 "lf.tab.c"
+    break;
+
+  case 17:
+#line 74 "lf.y"
+            { printf("type -> %s\n", (yyvsp[0].text)); }
+#line 1453 "lf.tab.c"
+    break;
+
+  case 18:
+#line 75 "lf.y"
+           { printf("type -> %s\n", (yyvsp[0].text)); }
+#line 1459 "lf.tab.c"
+    break;
+
+  case 19:
+#line 78 "lf.y"
+                       { printf("atrValue -> %s value\n", (yyvsp[-1].text)); }
+#line 1465 "lf.tab.c"
+    break;
+
+  case 20:
+#line 81 "lf.y"
+                                                                                   { printf("declFun -> %s %s %s funParam %s %s type %s funStatements %s\n", (yyvsp[-9].text), (yyvsp[-8].text), (yyvsp[-7].text), (yyvsp[-5].text), (yyvsp[-4].text), (yyvsp[-2].text), (yyvsp[0].text)); }
+#line 1471 "lf.tab.c"
+    break;
+
+  case 21:
+#line 84 "lf.y"
+          { printf("funParam -> \u03B5\n"); }
+#line 1477 "lf.tab.c"
+    break;
+
+  case 22:
+#line 85 "lf.y"
+                    { printf("funParam -> funParams\n"); }
+#line 1483 "lf.tab.c"
+    break;
+
+  case 23:
+#line 88 "lf.y"
+                  { printf("funParams -> declId\n"); }
+#line 1489 "lf.tab.c"
+    break;
+
+  case 24:
+#line 89 "lf.y"
+                                  { printf("funParams -> funParams %s declId\n", (yyvsp[-1].text)); }
+#line 1495 "lf.tab.c"
+    break;
+
+  case 25:
+#line 92 "lf.y"
+               { printf("funStatements -> \u03B5\n"); }
+#line 1501 "lf.tab.c"
+    break;
+
+  case 26:
+#line 93 "lf.y"
+                                                    { printf("funStatements -> funStatements funStatement %s\n", (yyvsp[0].text)); }
+#line 1507 "lf.tab.c"
     break;
 
 
-#line 1369 "lf.tab.c"
+#line 1511 "lf.tab.c"
 
       default: break;
     }
@@ -1597,7 +1739,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 78 "lf.y"
+#line 99 "lf.y"
 
 
 int main(int argc, char **argv){

@@ -1,3 +1,11 @@
-const a:bool = true;
-var b:int = 4;
-var c:float;
+fn main(argc:int):int{
+
+};
+
+fn main2():bool{
+
+};
+
+fn main3(argc:int, argv:bool):float{
+
+};
