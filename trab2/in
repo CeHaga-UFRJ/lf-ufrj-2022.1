@@ -1,11 +1,29 @@
-fn main(argc:int):int{
-
+fn respostaDaVidaDoUniversoEDeTudoMais():int{
+  return 42;
 };
 
-fn main2():bool{
-
+const pi:float = 3.14;
+fn calculaArea(raio:float):float{
+  var area:float;
+  if(raio == 0){
+    return 0;
+  };
+  area = raio * raio * pi;
+  return area;
 };
 
-fn main3(argc:int, argv:bool):float{
+fn fibonacci(n:int):int{
+  var resultado:int = 1;
+  var contador:int = 1;
+  while(true){
+    resultado = resultado * contador;
+    if(contador == n){
+      return resultado;
+    };
+    contador = contador + 1;
+  };
+};
 
+fn funcaoMatematicaQualquer(x:float, y:float):float{
+  return 2 * x * x + y * 3 + 8;
 };

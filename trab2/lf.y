@@ -42,6 +42,10 @@ int yylex();
 %token <text> Colon
 %token <text> Comma
 
+%left Equals
+%left Sum
+%left Mult
+
 %%
 program: { printf("program -> \u03B5\n"); }
         | program programStatement SemiColon { printf("program -> program programStatement %s\n", $3); }
@@ -63,11 +67,14 @@ declVar: Var declId atrVar { printf("declVar -> %s declId atrVar\n", $1); }
 
 atrVar: { printf("atrVar -> \u03B5\n"); }
       | atrValue { printf("atrVar -> atrValue\n"); }
+;
 
-value: IntNum { printf("value -> %d\n", $1); }
-     | FloatNum { printf("value -> %f\n", $1); }
-     | True { printf("value -> %s\n", $1); }
-     | False { printf("value -> %s\n", $1); }
+number: IntNum { printf("number -> %d\n", $1); }
+      | FloatNum { printf("number -> %f\n", $1); }
+;
+
+boolean: True { printf("boolean -> %s\n", $1); }
+       | False { printf("boolean -> %s\n", $1); }
 ;
 
 type: Int { printf("type -> %s\n", $1); }
@@ -75,10 +82,15 @@ type: Int { printf("type -> %s\n", $1); }
     | Bool { printf("type -> %s\n", $1); }
 ;
 
-atrValue: EqSign value { printf("atrValue -> %s value\n", $1); }
+atrValue: EqSign exp { printf("atrValue -> %s exp\n", $1); }
 ;
 
-declFun: Fn Id OpenPar funParam ClosePar Colon type OpenBra funStatements CloseBra { printf("declFun -> %s %s %s funParam %s %s type %s funStatements %s\n", $1, $2, $3, $5, $6, $8, $10); }
+declFun: Fn Id OpenPar funParam ClosePar Colon type OpenBra declVarFunc funStatements CloseBra { printf("declFun -> %s %s %s funParam %s %s type %s declVarFunc funStatements %s\n", $1, $2, $3, $5, $6, $8, $11); }
+;
+
+declVarFunc: { printf("declVarFunc -> \u03B5\n"); }
+           | declVarFunc declConst SemiColon { printf("declVarFunc -> declVarFunc declConst %s\n", $3); }
+           | declVarFunc declVar SemiColon { printf("declVarFunc -> declVarFunc declVar %s\n", $3); }
 ;
 
 funParam: { printf("funParam -> \u03B5\n"); }
@@ -106,7 +118,9 @@ conditional: If OpenPar condition ClosePar OpenBra funStatements CloseBra { prin
            | If OpenPar condition ClosePar OpenBra funStatements CloseBra Else OpenBra funStatements CloseBra { printf("conditional -> %s %s condition %s %s funStatements %s %s %s funStatements %s\n", $1, $2, $4, $5, $7, $8, $9, $11); }
 ;
 
-condition:
+condition: exp Equals exp { printf("condition -> exp %s exp\n", $2); }
+         | boolean Equals boolean { printf("condition -> boolean %s boolean\n", $2); }
+         | boolean { printf("condition -> boolean\n"); }
 ;
 
 loop: While OpenPar condition ClosePar OpenBra funStatements CloseBra { printf("loop -> %s %s condition %s %s funStatements %s\n", $1, $2, $4, $5, $7); }
@@ -115,7 +129,11 @@ loop: While OpenPar condition ClosePar OpenBra funStatements CloseBra { printf("
 ret: Return exp { printf("ret -> %s exp\n", $1); }
 ;
 
-exp:
+exp: exp Sum exp { printf("exp -> exp %s exp\n", $2); }
+   | exp Mult exp { printf("exp -> exp %s exp\n", $2); }
+   | OpenPar exp ClosePar { printf("exp -> %s exp %s\n", $1, $3); }
+   | number { printf("exp -> number\n"); }
+   | Id { printf("exp -> %s\n", $1); }
 ;
 %%
 
