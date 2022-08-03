@@ -69,17 +69,23 @@ atrVar: { printf("atrVar -> \u03B5\n"); }
       | atrValue { printf("atrVar -> atrValue\n"); }
 ;
 
-number: IntNum { printf("number -> %d\n", $1); }
-      | FloatNum { printf("number -> %f\n", $1); }
+type: Int { printf("type -> %s\n", $1); }
+    | Float { printf("type -> %s\n", $1); }
+    | Bool { printf("type -> %s\n", $1); }
 ;
 
 boolean: True { printf("boolean -> %s\n", $1); }
        | False { printf("boolean -> %s\n", $1); }
-;
 
-type: Int { printf("type -> %s\n", $1); }
-    | Float { printf("type -> %s\n", $1); }
-    | Bool { printf("type -> %s\n", $1); }
+value: IntNum { printf("value -> %d\n", $1); }
+     | FloatNum { printf("value -> %f\n", $1); }
+     | boolean { printf("value -> boolean\n"); }
+
+exp: exp Sum exp { printf("exp -> exp %s exp\n", $2); }
+   | exp Mult exp { printf("exp -> exp %s exp\n", $2); }
+   | OpenPar exp ClosePar { printf("exp -> %s exp %s\n", $1, $3); }
+   | value { printf("exp -> value\n"); }
+   | Id { printf("exp -> %s\n", $1); }
 ;
 
 atrValue: EqSign exp { printf("atrValue -> %s exp\n", $1); }
@@ -119,7 +125,6 @@ conditional: If OpenPar condition ClosePar OpenBra funStatements CloseBra { prin
 ;
 
 condition: exp Equals exp { printf("condition -> exp %s exp\n", $2); }
-         | boolean Equals boolean { printf("condition -> boolean %s boolean\n", $2); }
          | boolean { printf("condition -> boolean\n"); }
 ;
 
@@ -127,13 +132,6 @@ loop: While OpenPar condition ClosePar OpenBra funStatements CloseBra { printf("
 ;
 
 ret: Return exp { printf("ret -> %s exp\n", $1); }
-;
-
-exp: exp Sum exp { printf("exp -> exp %s exp\n", $2); }
-   | exp Mult exp { printf("exp -> exp %s exp\n", $2); }
-   | OpenPar exp ClosePar { printf("exp -> %s exp %s\n", $1, $3); }
-   | number { printf("exp -> number\n"); }
-   | Id { printf("exp -> %s\n", $1); }
 ;
 %%
 

@@ -1,29 +1,24 @@
-fn respostaDaVidaDoUniversoEDeTudoMais():int{
-  return 42;
-};
+/*
+ * Programa: Calcula a area de um circulo dado o seu raio
+ * Data: 02/08/2022
+ * Autores: Carlos Bravo, Markson Arguello e Pedro Ancelmo
+ */
 
+// Constante com valor pi
 const pi:float = 3.14;
+
+// Funcao de calcular a area
 fn calculaArea(raio:float):float{
   var area:float;
+  
+  // Se o raio for 0, nao precisa fazer a conta
   if(raio == 0){
     return 0;
   };
+
+  // area = quadrado do raio vezes pi
   area = raio * raio * pi;
+  
   return area;
 };
 
-fn fibonacci(n:int):int{
-  var resultado:int = 1;
-  var contador:int = 1;
-  while(true){
-    resultado = resultado * contador;
-    if(contador == n){
-      return resultado;
-    };
-    contador = contador + 1;
-  };
-};
-
-fn funcaoMatematicaQualquer(x:float, y:float):float{
-  return 2 * x * x + y * 3 + 8;
-};
